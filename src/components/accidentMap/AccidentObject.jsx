@@ -117,7 +117,14 @@ export default function AccidentObject({
       }}
       onMouseDown={handleMouseDown}
     >
-      {OBJECT_TYPES[object.type].icon}
+{object.type === "car" ? (
+  <div className="top-car">
+    <div className="car-window front" />
+    <div className="car-window rear" />
+  </div>
+) : (
+  OBJECT_TYPES[object.type].icon
+)}
     </div>
   );
 }

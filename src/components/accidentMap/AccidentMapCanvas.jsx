@@ -25,9 +25,10 @@ export default function AccidentMapCanvas({
 
   return (
     <div className="accident-map-canvas">
-      <div className="road-line horizontal" />
-      <div className="road-line vertical" />
-
+<div className="intersection-bg">
+  <div className="lane-line horizontal" />
+  <div className="lane-line vertical" />
+</div>
       {objects.map((obj) => {
         const displayPath = getDisplayPath(obj);
 

@@ -20,39 +20,81 @@
 .accident-map-canvas {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  height: 550px;
-  background: #4b4b4b;
-  border-radius: 16px;
+  max-width: 950px;
+  height: 620px;
+  background: #2f2f2f;
+  border-radius: 18px;
   overflow: hidden;
-  border: 2px solid #222;
+  border: 3px solid #1d1d1d;
 }
-
-.road-line {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.road-line.horizontal {
+.accident-map-canvas {
+  position: relative;
   width: 100%;
-  height: 6px;
-  top: 50%;
+  max-width: 950px;
+  height: 620px;
+  background: #2f2f2f;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 3px solid #1d1d1d;
+}
+
+.intersection-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      transparent calc(50% - 135px),
+      #3f3f3f calc(50% - 135px),
+      #3f3f3f calc(50% + 135px),
+      transparent calc(50% + 135px),
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent calc(50% - 135px),
+      #3f3f3f calc(50% - 135px),
+      #3f3f3f calc(50% + 135px),
+      transparent calc(50% + 135px),
+      transparent 100%
+    );
+}
+
+.intersection-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, transparent calc(50% - 135px), #e8e8e8 calc(50% - 135px), #e8e8e8 calc(50% - 131px), transparent calc(50% - 131px)),
+    linear-gradient(to right, transparent calc(50% + 131px), #e8e8e8 calc(50% + 131px), #e8e8e8 calc(50% + 135px), transparent calc(50% + 135px)),
+    linear-gradient(to bottom, transparent calc(50% - 135px), #e8e8e8 calc(50% - 135px), #e8e8e8 calc(50% - 131px), transparent calc(50% - 131px)),
+    linear-gradient(to bottom, transparent calc(50% + 131px), #e8e8e8 calc(50% + 131px), #e8e8e8 calc(50% + 135px), transparent calc(50% + 135px));
+}
+
+.lane-line.horizontal {
+  position: absolute;
   left: 0;
+  top: 50%;
+  width: 100%;
+  border-top: 4px dashed rgba(255, 255, 255, 0.75);
   transform: translateY(-50%);
 }
 
-.road-line.vertical {
-  width: 6px;
-  height: 100%;
+.lane-line.vertical {
+  position: absolute;
   left: 50%;
   top: 0;
+  height: 100%;
+  border-left: 4px dashed rgba(255, 255, 255, 0.75);
   transform: translateX(-50%);
 }
 
 .accident-object {
   position: absolute;
-  width: 46px;
-  height: 46px;
+  width: 150px;
+  height: 85px;
   transform: translate(-50%, -50%);
   font-size: 32px;
   display: flex;
@@ -131,4 +173,42 @@
 
 .accident-object {
   z-index: 10;
+}
+
+.top-car {
+  width: 135px;
+  height: 70px;
+  background: #d9362e;
+  border: 4px solid #111;
+  border-radius: 16px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.top-car::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  width: 28px;
+  height: 28px;
+  background: #9ed8ff;
+  border: 3px solid #111;
+  border-radius: 5px;
+}
+
+.top-car::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 16px;
+  width: 28px;
+  height: 28px;
+  background: #9ed8ff;
+  border: 3px solid #111;
+  border-radius: 5px;
+}
+
+.car-window {
+  display: none;
 }
