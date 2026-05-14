@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ListPage from "./pages/ListPage";
 import UploadPage from "./pages/UploadPage";
 import PostDetailPage from "./pages/PostDetailPage";
+import AccidentMapPage from "./pages/AccidentMapPage";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<ListPage />} />
         <Route path="/upload" element={<UploadPage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
-        <Route path="/profile" element={<ProfilePage />} /> 
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/accident-map" element={<AccidentMapPage />} />
       </Routes>
     </BrowserRouter>
   );

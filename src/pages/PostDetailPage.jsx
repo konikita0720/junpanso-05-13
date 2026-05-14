@@ -36,6 +36,7 @@ function PostDetailPage() {
   const [selectedOption, setSelectedOption] = useState("");
   const [commentText, setCommentText] = useState("");
   const [replyTarget, setReplyTarget] = useState(null);
+  const [expandedReplies, setExpandedReplies] = useState({});
 
   useEffect(() => {
     const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
@@ -249,9 +250,15 @@ userId: user.id,
 };
     });
 
-    setCommentText("");
-    setReplyTarget(null);
-  };
+setCommentText("");
+
+if (replyTarget) {
+  setExpandedReplies({
+    ...expandedReplies,
+    [replyTarget.id]: true,
+  });
+}
+};
 
   if (!post) {
     return (
@@ -388,53 +395,92 @@ userId: user.id,
     답글 달기
   </button>
 )}
-{(comment.replies || []).map((reply) => (
-  <div
-    key={reply.id}
-    style={{
-      marginLeft: "50px",
-      marginTop: "14px",
-      display: "flex",
-      gap: "10px",
-      alignItems: "flex-start",
-    }}
-  >
-    <span
-      style={{
-        color: "#9ca3af",
-        fontSize: "20px",
-        lineHeight: "20px",
-      }}
-   >
-      ㄴ
-    </span>
+{(() => {
+  const replies = comment.replies || [];
+  const isExpanded = expandedReplies[comment.id];
+  const visibleReplies = isExpanded ? replies : replies.slice(0, 3);
 
-    <div>
-<strong>
-  {reply.isDeleted ? "알 수 없음" : reply.nickname || "익명"}
-</strong>
+  return (
+    <>
+      {visibleReplies.map((reply) => (
+        <div
+          key={reply.id}
+          style={{
+            marginLeft: "50px",
+            marginTop: "14px",
+            display: "flex",
+            gap: "10px",
+            alignItems: "flex-start",
+          }}
+        >
+          <span
+            style={{
+              color: "#9ca3af",
+              fontSize: "20px",
+              lineHeight: "20px",
+            }}
+          >
+            ㄴ
+          </span>
 
-<p style={{ marginTop: "4px", color: reply.isDeleted ? "#999" : "black" }}>
-  {reply.text}
-</p>
+          <div>
+            <strong>
+              {reply.isDeleted ? "알 수 없음" : reply.nickname || "익명"}
+            </strong>
 
-{!reply.isDeleted && user && reply.userId === user.id && (
-  <button
-    onClick={() => handleDeleteReply(comment.id, reply.id)}
-    style={{
-      border: "none",
-      background: "transparent",
-      color: "#dc2626",
-      cursor: "pointer",
-      padding: 0,
-    }}
-  >
-    삭제
-  </button>
-)}
+            <p
+              style={{
+                marginTop: "4px",
+                color: reply.isDeleted ? "#999" : "black",
+              }}
+            >
+              {reply.text}
+            </p>
+
+            {!reply.isDeleted && user && reply.userId === user.id && (
+              <button
+                onClick={() => handleDeleteReply(comment.id, reply.id)}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  color: "#dc2626",
+                  cursor: "pointer",
+                  padding: 0,
+                }}
+              >
+                삭제
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+
+      {replies.length > 3 && (
+        <button
+          onClick={() =>
+            setExpandedReplies({
+              ...expandedReplies,
+              [comment.id]: !expandedReplies[comment.id],
+            })
+          }
+          style={{
+            marginLeft: "50px",
+            marginTop: "10px",
+            border: "none",
+            background: "transparent",
+            color: "#2563eb",
+            cursor: "pointer",
+            padding: 0,
+          }}
+        >
+          {isExpanded ? "답글 가리기" : `답글 보기 (${replies.length - 3}개 더)`}
+        </button>
+      )}
+    </>
+  );
+})()}
+           
     </div>
-  </div>
-))}                  </div>
                 ))
               )}
             </div>
